@@ -1,18 +1,18 @@
-import { mysqlTable, serial, int, varchar, datetime } from 'drizzle-orm/mysql-core';
+import { pgTable, varchar, integer, timestamp } from 'drizzle-orm/pg-core';
 
-export const user = mysqlTable('user', {
+export const user = pgTable('user', {
 	id: varchar('id', { length: 255 }).primaryKey(),
-	age: int('age'),
+	age: integer('age'),
 	username: varchar('username', { length: 32 }).notNull().unique(),
 	passwordHash: varchar('password_hash', { length: 255 }).notNull()
 });
 
-export const session = mysqlTable('session', {
+export const session = pgTable('session', {
 	id: varchar('id', { length: 255 }).primaryKey(),
 	userId: varchar('user_id', { length: 255 })
 		.notNull()
 		.references(() => user.id),
-	expiresAt: datetime('expires_at').notNull()
+	expiresAt: timestamp('expires_at').notNull()
 });
 
 export type Session = typeof session.$inferSelect;
