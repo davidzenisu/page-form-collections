@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-	import '../app.css';
+	import Header from '../../Header.svelte';
+	import '../../../app.css';
 	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 
 	let { children } = $props();
