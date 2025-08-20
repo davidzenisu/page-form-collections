@@ -4,10 +4,19 @@
 	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 
 	let { children } = $props();
+
+	const sections = {
+		home: { label: 'Home' },
+		about: { href: 'about', label: 'About' },
+		sverdle: { href: 'sverdle', label: 'Sverdle' },
+		paraglide: { href: 'paraglide', label: 'Paraglide' },
+		login: { href: 'lucia', label: 'Login' }
+	};
+	const subsection = '/demo';
 </script>
 
 <div class="app bg-surface text-on-surface dark:bg-surface-dark dark:text-on-surface-dark">
-	<Header />
+	<Header {sections} {subsection} />
 
 	<main>
 		{@render children()}

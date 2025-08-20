@@ -4,17 +4,23 @@
 	import github from '$lib/images/github.svg';
 	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 
-	const sections = {
-		home: { href: null, label: 'Home' },
-		about: { href: '/about', label: 'About' },
-		sverdle: { href: '/sverdle', label: 'Sverdle' },
-		login: { href: '/demo/lucia', label: 'Login' }
-	};
+	interface Section {
+		href?: string;
+		label: string;
+	}
+
+	interface Props {
+		/** Is this the principal call to action on the page? */
+		sections: Record<string, Section>;
+		subsection?: string;
+	}
+
+	const { subsection = '/', ...props }: Props = $props();
 </script>
 
 <header>
 	<div class="corner">
-		<a href="/">
+		<a href={subsection}>
 			<img src={logo} alt="SvelteKit" />
 		</a>
 	</div>
@@ -37,7 +43,7 @@
 		border: var(--size) solid transparent;
 	} */ -->
 
-			{#each Object.entries(sections) as [key, section]}
+			{#each Object.entries(props.sections) as [key, section]}
 				<!-- https://github.com/tailwindlabs/tailwindcss/discussions/9563	 -->
 				<li
 					class="
@@ -54,17 +60,19 @@
 					data-[aria-current=page]:before:content-['']
 					before:dark:data-[aria-current=page]:border-t-primary-dark
 					"
-					aria-current={(!section.href && page.url.pathname === '/') ||
-					(section.href && page.url.pathname.startsWith(section.href))
+					aria-current={(!section.href && page.url.pathname === subsection) ||
+					(section.href && page.url.pathname.startsWith(`${subsection}/${section.href}`))
 						? 'page'
 						: undefined}
-					data-aria-current={(!section.href && page.url.pathname === '/') ||
-					(section.href && page.url.pathname.startsWith(section.href))
+					data-aria-current={(!section.href && page.url.pathname === subsection) ||
+					(section.href && page.url.pathname.startsWith(`${subsection}/${section.href}`))
 						? 'page'
 						: undefined}
 				>
 					<a
-						href={section.href || '/'}
+						href={subsection === '/'
+							? `${subsection}${section.href || ''}`
+							: `${subsection}/${section.href || ''}`}
 						class="text-on-primary hover:text-tertiary dark:text-on-primary dark:hover:text-tertiary-dark"
 						>{section.label}</a
 					>
