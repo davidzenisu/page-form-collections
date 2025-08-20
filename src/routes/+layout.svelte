@@ -6,7 +6,7 @@
 	let { children } = $props();
 </script>
 
-<div class="dark:bg-dark-bg-0">
+<div class="app bg-surface text-on-surface dark:bg-surface-dark dark:text-on-surface-dark">
 	<Header />
 
 	<main>
