@@ -1,11 +1,12 @@
 <script lang="ts">
 	import Header from './Header.svelte';
 	import '../app.css';
+	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 
 	let { children } = $props();
 </script>
 
-<div class="app">
+<div class="dark:bg-dark-bg-0">
 	<Header />
 
 	<main>
@@ -13,9 +14,11 @@
 	</main>
 
 	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
+		{#if PUBLIC_GITHUB_URL}
+			<p>
+				visit <a target="_blank" href={PUBLIC_GITHUB_URL}>GitHub</a> to see the source code.
+			</p>
+		{/if}
 	</footer>
 </div>
 

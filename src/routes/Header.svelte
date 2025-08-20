@@ -2,6 +2,7 @@
 	import { page } from '$app/state';
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 </script>
 
 <header>
@@ -31,11 +32,13 @@
 		</svg>
 	</nav>
 
-	<div class="corner">
-		<a href="https://github.com/sveltejs/kit">
-			<img src={github} alt="GitHub" />
-		</a>
-	</div>
+	{#if PUBLIC_GITHUB_URL}
+		<div class="corner">
+			<a href={PUBLIC_GITHUB_URL} target="_blank" rel="noopener noreferrer">
+				<img src={github} alt="GitHub" />
+			</a>
+		</div>
+	{/if}
 </header>
 
 <style>
