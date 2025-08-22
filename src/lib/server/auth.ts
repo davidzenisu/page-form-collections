@@ -79,3 +79,5 @@ export function deleteSessionTokenCookie(event: RequestEvent) {
 		path: '/'
 	});
 }
+
+//next steps: https://simplewebauthn.dev/
