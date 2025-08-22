@@ -27,22 +27,10 @@
 
 	<nav>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
+			<path class="fill-primary dark:fill-primary-dark" d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
 		<!-- https://v3.tailwindcss.com/docs/reusing-styles -->
-		<ul>
-			<!-- 
-	/* li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-	} */ -->
-
+		<ul class="bg-primary dark:bg-primary-dark">
 			{#each Object.entries(props.sections) as [key, section]}
 				<!-- https://github.com/tailwindlabs/tailwindcss/discussions/9563	 -->
 				<li
@@ -80,7 +68,7 @@
 			{/each}
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">
-			<path d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
+			<path class="fill-primary dark:fill-primary-dark" d="M0,0 L0,3 C0.5,3 0.5,3 1,2 L2,0 Z" />
 		</svg>
 	</nav>
 
@@ -121,17 +109,12 @@
 	nav {
 		display: flex;
 		justify-content: center;
-		--background: rgba(255, 255, 255, 0.7);
 	}
 
 	svg {
 		width: 2em;
 		height: 3em;
 		display: block;
-	}
-
-	path {
-		fill: var(--background);
 	}
 
 	ul {
@@ -143,7 +126,6 @@
 		justify-content: center;
 		align-items: center;
 		list-style: none;
-		background: var(--background);
 		background-size: contain;
 	}
 
@@ -151,17 +133,6 @@
 		position: relative;
 		height: 100%;
 	}
-
-	/* li[aria-current='page']::before {
-		--size: 6px;
-		content: '';
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: calc(50% - var(--size));
-		border: var(--size) solid transparent;
-	} */
 
 	nav a {
 		display: flex;
