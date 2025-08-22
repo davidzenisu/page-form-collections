@@ -1,21 +1,29 @@
 <script lang="ts">
-	import Header from './Header.svelte';
-	import '../app.css';
+	import Header from '../Header.svelte';
+	import '../../app.css';
+	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 
 	let { children } = $props();
+
+	const sections = {
+		home: { label: 'Home' },
+		demo: { href: 'demo', label: 'Demo' }
+	};
 </script>
 
-<div class="app">
-	<Header />
+<div class="app bg-surface text-on-surface dark:bg-surface-dark dark:text-on-surface-dark">
+	<Header {sections} />
 
 	<main>
 		{@render children()}
 	</main>
 
 	<footer>
-		<p>
-			visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to learn about SvelteKit
-		</p>
+		{#if PUBLIC_GITHUB_URL}
+			<p>
+				visit <a target="_blank" href={PUBLIC_GITHUB_URL}>GitHub</a> to see the source code.
+			</p>
+		{/if}
 	</footer>
 </div>
 

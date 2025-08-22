@@ -8,11 +8,14 @@
                 "github.copilot",
                 "github.copilot-chat",
                 "formulahendry.vscode-mysql",
-                "inlang.vs-code-extension"
+                "inlang.vs-code-extension",
+                "bradlc.vscode-tailwindcss"
             ],
             "settings": {
                 "files.autoSave": "afterDelay",
-                "editor.formatOnSave": true
+                "editor.formatOnSave": true,
+                //https://github.com/tailwindlabs/tailwindcss-intellisense/issues/961
+                "editor.defaultColorDecorators": "always"
             }
         }
     }
