@@ -13,7 +13,7 @@
 	};
 </script>
 
-<div>
+<div class="flex flex-col items-center gap-4">
 	<h1>Upcoming events!</h1>
 	<ul class="todos">
 		{#each data.events as event}
