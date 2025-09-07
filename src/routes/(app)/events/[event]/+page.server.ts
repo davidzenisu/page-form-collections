@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm';
 
 export const load: PageServerLoad = async ({ params }) => {
     const event = await db.query.event.findFirst({
-        where: eq(table.event.id, params.slug)
+        where: eq(table.event.id, params.event)
     });
     if (event) {
         return {
