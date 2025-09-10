@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm';
 import { encodeBase64url, encodeHexLowerCase } from '@oslojs/encoding';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
+import { sha256 } from '@noble/hashes/sha256';
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
