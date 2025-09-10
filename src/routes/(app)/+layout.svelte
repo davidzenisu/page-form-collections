@@ -6,8 +6,8 @@
 	let { children } = $props();
 
 	const sections = {
-		home: { label: 'Home' },
-		demo: { href: 'demo', label: 'Demo' }
+		home: { label: 'Home' }
+		// demo: { href: 'demo', label: 'Demo' }
 	};
 </script>
 
