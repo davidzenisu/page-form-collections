@@ -5,9 +5,6 @@ import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	optimizeDeps: {
-		exclude: ["@node-rs/argon2-linux-x64-musl"]
-	},
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
