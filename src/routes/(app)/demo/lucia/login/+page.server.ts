@@ -1,4 +1,3 @@
-import { hash, verify } from '@node-rs/argon2';
 import { encodeBase32LowerCase } from '@oslojs/encoding';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
@@ -6,6 +5,40 @@ import * as auth from '$lib/server/auth';
 import { db } from '$lib/server/db';
 import * as table from '$lib/server/db/schema';
 import type { Actions, PageServerLoad } from './$types';
+import { randomBytes, scryptSync } from 'crypto';
+
+// Pass the password string and get hashed password back
+// ( and store only the hashed string in your database)
+function encryptPassword(password: string, salt: string) {
+	return scryptSync(password, salt, 32).toString('hex');
+}
+
+/**
+ * Hash password with random salt
+ * @return {string} password hash followed by salt
+ *  XXXX till 64 XXXX till 32
+ *
+ */
+function hash(password: string) {
+	// Any random string here (ideally should be at least 16 bytes)
+	const salt = randomBytes(16).toString('hex');
+	return encryptPassword(password, salt) + salt;
+}
+
+// fetch the user from your db and then use this function
+
+/**
+ * Match password against the stored hash
+ */
+function verify(hash: string, password: string) {
+	// extract salt from the hashed string
+	// our hex password length is 32*2 = 64
+	const salt = hash.slice(64);
+	const originalPassHash = hash.slice(0, 64);
+	const currentPassHash = encryptPassword(password, salt);
+	return originalPassHash === currentPassHash;
+}
+
 
 export const load: PageServerLoad = async (event) => {
 	if (event.locals.user) {
@@ -79,7 +112,8 @@ export const actions: Actions = {
 			const sessionToken = auth.generateSessionToken();
 			const session = await auth.createSession(sessionToken, userId);
 			auth.setSessionTokenCookie(event, sessionToken, session.expiresAt);
-		} catch {
+		} catch (e) {
+			console.error(e);
 			return fail(500, { message: 'An error has occurred' });
 		}
 		return redirect(302, '/demo/lucia');

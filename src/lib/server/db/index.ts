@@ -10,6 +10,8 @@ export const client = mysql.createPool(DATABASE_URL);
 
 export const db = drizzle(client, { schema, mode: 'default' });
 
-await migrate(db, {
-    migrationsFolder: './drizzle'
-});
+export const migrateDb = async function migrateDb() {
+    return await migrate(db, {
+        migrationsFolder: './drizzle'
+    });
+}
