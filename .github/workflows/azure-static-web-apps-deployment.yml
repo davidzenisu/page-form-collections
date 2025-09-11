@@ -37,8 +37,7 @@ jobs:
           inlineScript: |
             echo "Configuring application..."
             az staticwebapp appsettings set -n ${{ secrets.AZURE_SWA_NAME }} --setting-names \
-             DATABASE_URL=${{ secrets.CONFIG_DATABASE_URL }} \
-             PUBLIC_GITHUB_URL=${{ github.server_url }}/${{ github.repository}}
+             DATABASE_URL=${{ secrets.CONFIG_DATABASE_URL }}
           # Azure CLI version to be used to execute the script. If not provided, latest version is used
           azcliversion: latest
       - name: Get Deployment Token
@@ -62,6 +61,8 @@ jobs:
           output_location: 'build/static' # Built app content directory - optional
           api_location: 'build/server' # Api source code path - optional
           ###### End of Repository/Build Configurations ######
+        env:
+          PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'feature/') && github.event.action == 'closed'
