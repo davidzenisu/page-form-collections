@@ -36,6 +36,13 @@ export const actions = {
 	upload: async ({ request }: RequestEvent) => {
 		const data = await request.formData();
 		const file = data.get('file') as File;
-		console.log(file);
+		const eventId = data.get('id') as string;
+		// get file ending
+		const fileEnding = file.name.split('.').pop();
+		const arrayBuffer = await file.arrayBuffer();
+		const buffer = Buffer.from(arrayBuffer);
+		// would work but not recommended to be stored in database!
+		// const base64String = buffer.toString('base64');
+		// console.log(base64String);
 	}
 };

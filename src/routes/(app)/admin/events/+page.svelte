@@ -42,6 +42,7 @@
 				</form>
 
 				<form method="POST" action="?/upload" enctype="multipart/form-data">
+					<input type="hidden" name="id" value={event.id} />
 					<button
 						type="button"
 						class="chan"
