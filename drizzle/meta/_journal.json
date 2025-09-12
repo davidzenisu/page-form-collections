@@ -15,6 +15,13 @@
       "when": 1757251863076,
       "tag": "0001_outgoing_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1757697174621,
+      "tag": "0002_third_madelyne_pryor",
+      "breakpoints": true
     }
   ]
 }
