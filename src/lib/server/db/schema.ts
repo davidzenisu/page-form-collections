@@ -1,7 +1,7 @@
 import { mysqlTable, customType, int, varchar, datetime, timestamp } from 'drizzle-orm/mysql-core';
 import { createId } from '@paralleldrive/cuid2';
 
-const customLongBlob = customType<{ data: string }>({
+const customMediumBlob = customType<{ data: string }>({
 	dataType() {
 		return 'MEDIUMBLOB';
 	},
@@ -36,7 +36,7 @@ export const picture = mysqlTable('picture', {
 		.notNull()
 		.references(() => event.id),
 	mimeType: varchar('mime_type', { length: 50 }).notNull(),
-	data: customLongBlob() // mediumblob
+	data: customMediumBlob() // mediumblob
 });
 
 export type Session = typeof session.$inferSelect;
