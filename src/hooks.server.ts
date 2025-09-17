@@ -5,7 +5,7 @@ import { paraglideMiddleware } from '$lib/paraglide/server';
 import { migrateDb } from '$lib/server/db';
 import type { ServerInit } from '@sveltejs/kit';
 
-export const initDB: ServerInit = async() => {
+export const init: ServerInit = async () => {
 	await migrateDb();
 }
 
