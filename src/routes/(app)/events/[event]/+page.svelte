@@ -13,5 +13,5 @@
 			timeZone: 'UTC'
 		})}
 	</div>
-	<img src={eventImage} alt={data.event.name} class="my-4 rounded-md" />
+	<img src={eventImage} alt={data.event.name} class="my-4 max-h-64 rounded-md" />
 </div>
