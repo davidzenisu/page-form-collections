@@ -14,7 +14,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	}
 
 	return {
-		events: await db.select().from(table.event)
+		events: await db.select().from(table.event),
+		pictures: await db.select().from(table.picture)
 	};
 };
 
@@ -41,6 +42,11 @@ export const actions = {
 		const fileEnding = file.name.split('.').pop();
 		const arrayBuffer = await file.arrayBuffer();
 		const buffer = Buffer.from(arrayBuffer);
+		await db.insert(table.picture).values({
+			eventId: eventId,
+			data: buffer,
+			mimeType: file.type
+		})
 		// would work but not recommended to be stored in database!
 		// const base64String = buffer.toString('base64');
 		// console.log(base64String);

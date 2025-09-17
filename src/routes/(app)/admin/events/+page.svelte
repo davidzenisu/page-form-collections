@@ -63,6 +63,12 @@
 						}}
 					/>
 				</form>
+				<img
+					src="data:image/png;base64;{data.pictures
+						.find((p) => p.eventId === event.id)
+						?.data?.toString()}"
+					alt="Event picture for {event.name}"
+				/>
 			</li>
 		{/each}
 	</ul>
