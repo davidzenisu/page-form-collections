@@ -11,7 +11,10 @@ export const client = mysql.createPool(
 export const db = drizzle(client, { schema, mode: 'default' });
 
 export const migrateDb = async function migrateDb() {
-	if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
+	if (!env.DATABASE_URL) {
+		console.warn('DATABASE_URL not set, skipping migrations');
+		return;
+	}
 
 	return await migrate(db, {
 		migrationsFolder: './drizzle'
