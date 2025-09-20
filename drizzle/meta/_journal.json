@@ -15,6 +15,20 @@
       "when": 1757251863076,
       "tag": "0001_outgoing_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1758378024210,
+      "tag": "0002_new_blur",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1758379507904,
+      "tag": "0003_sticky_fallen_one",
+      "breakpoints": true
     }
   ]
 }
