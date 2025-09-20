@@ -64,7 +64,7 @@
 					<Form.Field {form} name="time">
 						<Form.Control>
 							{#snippet children({ props })}
-								<Form.Label>Estimated ToA</Form.Label>
+								<Form.Label>Start Time</Form.Label>
 								<Select.Root
 									type="single"
 									bind:value={$formData.time}
