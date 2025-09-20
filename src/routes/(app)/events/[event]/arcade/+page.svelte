@@ -1,7 +1,7 @@
 <script>
 	let { data } = $props();
 	const title = 'Arcade Competition';
-	const description = 'Face off in an epic compentition in';
+	const description = 'Face off in an epic competition in';
 	import eventImage from '$lib/images/arcade_event.jpg';
 </script>
 
