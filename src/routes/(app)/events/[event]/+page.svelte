@@ -19,7 +19,8 @@
 	}: { data: { form: SuperValidated<Infer<RegistrationSchema>>; event: any; committed: boolean } } =
 		$props();
 	const form = superForm(data.form, {
-		validators: zodClient(registrationSchema)
+		validators: zodClient(registrationSchema),
+		resetForm: false
 	});
 	const { form: formData, enhance } = form;
 
@@ -112,6 +113,9 @@
 						<Form.FieldErrors />
 					</Form.Field>
 					<Form.Button>Submit</Form.Button>
+					{#if form?.success}
+						<p>Successfully registered!</p>
+					{/if}
 				</fieldset>
 			</form>
 		</Card.Content>
