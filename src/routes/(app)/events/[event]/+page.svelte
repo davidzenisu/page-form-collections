@@ -82,7 +82,12 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>Estimated ToA</Form.Label>
-								<Select.Root type="single" bind:value={$formData.time} name={props.name}>
+								<Select.Root
+									type="single"
+									bind:value={$formData.time}
+									name={props.name}
+									disabled={data.formCache != undefined}
+								>
 									<Select.Trigger {...props}>
 										{$formData.time ? $formData.time : 'Select a time'}
 									</Select.Trigger>
