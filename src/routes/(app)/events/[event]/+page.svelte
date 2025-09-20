@@ -16,13 +16,18 @@
 
 	let {
 		data
-	}: { data: { form: SuperValidated<Infer<RegistrationSchema>>; event: any; committed: boolean } } =
-		$props();
+	}: {
+		data: {
+			form: SuperValidated<Infer<RegistrationSchema>>;
+			event: any;
+			committed: boolean;
+		};
+	} = $props();
 	const form = superForm(data.form, {
 		validators: zodClient(registrationSchema),
 		resetForm: false
 	});
-	const { form: formData, enhance } = form;
+	const { form: formData, enhance, message } = form;
 
 	const activities = [
 		{
@@ -113,8 +118,13 @@
 						<Form.FieldErrors />
 					</Form.Field>
 					<Form.Button>Submit</Form.Button>
-					{#if form?.success}
-						<p>Successfully registered!</p>
+					{#if $message}
+						<div
+							class:text-primary={$message.type == 'success'}
+							class:text-error={$message.type == 'error'}
+						>
+							{$message.text}
+						</div>
 					{/if}
 				</fieldset>
 			</form>

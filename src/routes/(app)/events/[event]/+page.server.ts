@@ -6,11 +6,9 @@ import type { PageServerLoad, Actions } from './$types';
 import * as table from '$lib/server/db/schema';
 import { eq } from 'drizzle-orm';
 
-import { superValidate } from "sveltekit-superforms";
+import { message, superValidate } from "sveltekit-superforms";
 import { registrationSchema } from "$lib/forms/schema";
 import { zod } from "sveltekit-superforms/adapters";
-
-import { fail } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
     const event = await db.query.event.findFirst({
@@ -52,8 +50,9 @@ export const actions: Actions = {
         const event = await request.formData();
         const form = await superValidate(event, zod(registrationSchema));
         if (!form.valid) {
-            return fail(400, {
-                form,
+            return message(form, {
+                type: 'error',
+                text: 'Please check the form for errors.'
             });
         }
         console.log('Form data is valid: ', form.data);
@@ -68,6 +67,8 @@ export const actions: Actions = {
             eventId: params.event
         });
         cookies.set(`${params.event}_main`, id, { path: '/' });
-        return { form };
+        return message(form,
+            { type: 'success', text: 'You have been registered successfully!' }
+        );
     },
 };
