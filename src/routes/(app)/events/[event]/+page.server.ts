@@ -1,5 +1,6 @@
 import { db } from '$lib/server/db';
 import { error } from '@sveltejs/kit';
+import { createId } from '@paralleldrive/cuid2';
 
 import type { PageServerLoad, Actions } from './$types';
 import * as table from '$lib/server/db/schema';
@@ -16,14 +17,29 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
         where: eq(table.event.id, params.event)
     });
     const form = await superValidate(zod(registrationSchema));
-    const formCache = JSON.parse(cookies.get(`${params.event}_main`) ?? 'null');
-    console.log('Form cookie: ', formCache);
+    const formCookie = cookies.get(`${params.event}_main`);
+    console.log('Form cookie: ', formCookie);
+    let formCache: table.Registration | undefined;
+    if (formCookie) {
+        formCache = await db.query.registration.findFirst({
+            where: eq(table.registration.id, formCookie)
+        });
+        if (formCache) {
+            form.data = {
+                name: formCache.name,
+                company: formCache.company,
+                time: formCache.time
+            };
+        }
+    }
+    const committed = formCache ? true : false;
+    console.log('Committed: ', committed);
 
     if (event) {
         return {
             event,
             form,
-            formCache
+            committed
         };
     }
     error(404, 'Not found');
@@ -39,8 +55,16 @@ export const actions: Actions = {
             });
         }
         console.log('Form data is valid: ', form.data);
-        cookies.set(`${params.event}_main`, JSON.stringify(form.data), { path: '/' });
+        // https://github.com/drizzle-team/drizzle-orm/discussions/600
+        const id = createId();
+        await db.insert(table.registration).values({
+            id: id,
+            activity: 'main',
+            company: form.data.company,
+            time: form.data.time,
+            eventId: params.event
+        });
+        cookies.set(`${params.event}_main`, id, { path: '/' });
         return { form };
-
     },
 };

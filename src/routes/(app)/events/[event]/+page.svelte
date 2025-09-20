@@ -16,13 +16,12 @@
 
 	let {
 		data
-	}: { data: { form: SuperValidated<Infer<RegistrationSchema>>; event: any; formCache: any } } =
+	}: { data: { form: SuperValidated<Infer<RegistrationSchema>>; event: any; committed: boolean } } =
 		$props();
 	const form = superForm(data.form, {
 		validators: zodClient(registrationSchema)
 	});
 	const { form: formData, enhance } = form;
-	formData.set(data.formCache || {});
 
 	const activities = [
 		{
@@ -68,7 +67,7 @@
 		</Card.Header>
 		<Card.Content>
 			<form method="POST" use:enhance>
-				<fieldset disabled={data.formCache != undefined} class="flex flex-col gap-6">
+				<fieldset disabled={data.committed} class="flex flex-col gap-6">
 					<Form.Field {form} name="name">
 						<Form.Control>
 							{#snippet children({ props })}
@@ -86,7 +85,7 @@
 									type="single"
 									bind:value={$formData.time}
 									name={props.name}
-									disabled={data.formCache != undefined}
+									disabled={data.committed}
 								>
 									<Select.Trigger {...props}>
 										{$formData.time ? $formData.time : 'Select a time'}
