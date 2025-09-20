@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import logo from '$lib/images/svelte-logo.svg';
+	import logo from '$lib/images/icon.png';
 	import github from '$lib/images/github.svg';
 	import { PUBLIC_GITHUB_URL } from '$env/static/public';
 
@@ -21,11 +21,11 @@
 <header>
 	<div class="corner">
 		<a href={subsection}>
-			<img src={logo} alt="SvelteKit" />
+			<img src={logo} alt="Ovid" />
 		</a>
 	</div>
 
-	<nav>
+	<nav class="!hidden">
 		<svg viewBox="0 0 2 3" aria-hidden="true">
 			<path class="fill-primary dark:fill-primary-dark" d="M0,0 L1,2 C1.5,3 1.5,3 2,3 L2,0 Z" />
 		</svg>
@@ -75,7 +75,7 @@
 	{#if PUBLIC_GITHUB_URL}
 		<div class="corner">
 			<a href={PUBLIC_GITHUB_URL} target="_blank" rel="noopener noreferrer">
-				<img src={github} alt="GitHub" />
+				<img class="dark:invert" src={github} alt="GitHub" />
 			</a>
 		</div>
 	{/if}
