@@ -1,6 +1,5 @@
-import { mysqlTable, serial, int, varchar, datetime, timestamp } from 'drizzle-orm/mysql-core';
+import { mysqlTable, serial, int, varchar, datetime, time, timestamp, boolean } from 'drizzle-orm/mysql-core';
 import { createId } from '@paralleldrive/cuid2';
-import { time } from 'console';
 
 export const user = mysqlTable('user', {
 	id: varchar('id', { length: 255 }).primaryKey(),
@@ -18,11 +17,22 @@ export const session = mysqlTable('session', {
 });
 
 export const event = mysqlTable('event', {
-	id: varchar({ length: 128 }).$defaultFn(() => createId()),
+	id: varchar({ length: 128 }).$defaultFn(() => createId()).primaryKey(),
 	inserted_at: timestamp('inserted_at').notNull().defaultNow(),
 	name: varchar('name', { length: 50 }).notNull(),
 	description: varchar('description', { length: 255 }),
 	time: datetime('time').notNull(),
+});
+
+export const registration = mysqlTable('registration', {
+	id: varchar({ length: 128 }).$defaultFn(() => createId()).primaryKey(),
+	inserted_at: timestamp('inserted_at').notNull().defaultNow(),
+	activity: varchar('name', { length: 50 }).notNull(),
+	company: boolean('company').notNull().default(false),
+	time: time('time').notNull(),
+	eventId: varchar('event_id', { length: 128 })
+		.notNull()
+		.references(() => event.id, { onDelete: 'cascade' }),
 });
 
 export type Session = typeof session.$inferSelect;
