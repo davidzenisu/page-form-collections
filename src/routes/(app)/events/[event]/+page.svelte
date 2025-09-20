@@ -126,6 +126,9 @@
 							{$message.text}
 						</div>
 					{/if}
+					{#if data.committed}
+						<div class="text-primary">You're already registered!</div>
+					{/if}
 				</fieldset>
 			</form>
 		</Card.Content>
