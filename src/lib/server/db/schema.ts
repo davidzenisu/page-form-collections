@@ -27,7 +27,8 @@ export const event = mysqlTable('event', {
 export const registration = mysqlTable('registration', {
 	id: varchar({ length: 128 }).$defaultFn(() => createId()).primaryKey(),
 	inserted_at: timestamp('inserted_at').notNull().defaultNow(),
-	activity: varchar('name', { length: 50 }).notNull(),
+	activity: varchar('activity', { length: 50 }).notNull(),
+	name: varchar('name', { length: 24 }).notNull(),
 	company: boolean('company').notNull().default(false),
 	time: time('time').notNull(),
 	eventId: varchar('event_id', { length: 128 })
@@ -40,3 +41,5 @@ export type Session = typeof session.$inferSelect;
 export type User = typeof user.$inferSelect;
 
 export type Event = typeof event.$inferSelect;
+
+export type Registration = typeof registration.$inferSelect;
