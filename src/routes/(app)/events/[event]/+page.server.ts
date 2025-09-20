@@ -30,6 +30,8 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
                 company: formCache.company,
                 time: formCache.time as typeof form.data.time
             };
+        } else {
+            cookies.delete(`${params.event}_main`, { path: '/' });
         }
     }
     const committed = formCache ? true : false;
