@@ -10,9 +10,9 @@
 	<h2>{description}</h2>
 	<h2 class="text-primary">
 		<a
-			href="https://www.playstation.com/de-de/games/horizon-call-of-the-mountain/"
+			href="https://www.playstation.com/en-us/games/gran-turismo-7/ps-vr2/"
 			target="_blank"
-			rel="noopener noreferrer">Call of the Mountain</a
+			rel="noopener noreferrer">Gran Turismo 7</a
 		>
 	</h2>
 	<div>__________</div>
