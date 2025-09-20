@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
             form.data = {
                 name: formCache.name,
                 company: formCache.company,
-                time: formCache.time
+                time: formCache.time as typeof form.data.time
             };
         }
     }
@@ -59,6 +59,7 @@ export const actions: Actions = {
         const id = createId();
         await db.insert(table.registration).values({
             id: id,
+            name: form.data.name,
             activity: 'main',
             company: form.data.company,
             time: form.data.time,
