@@ -93,7 +93,7 @@
 							{$message.text}
 						</div>
 					{/if}
-					{#if data.committed}
+					{#if data.committed && !$message}
 						<div class="text-primary">You're already registered!</div>
 					{/if}
 				</fieldset>
