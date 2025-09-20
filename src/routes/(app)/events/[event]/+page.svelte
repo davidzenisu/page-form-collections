@@ -5,21 +5,24 @@
 	import whisyImage from '$lib/images/whisky_event.jpg';
 
 	import * as Card from '$lib/components/ui/card/index.js';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import { Label } from '$lib/components/ui/label/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Form from '$lib/components/ui/form/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
+	import { Checkbox } from '$lib/components/ui/checkbox/index.js';
 
-	import { registrationSchema, type RegistrationSchema } from '$lib/forms/schema.js';
+	import { registrationSchema, type RegistrationSchema, TimeEnum } from '$lib/forms/schema.js';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	let data = $props();
+	let {
+		data
+	}: { data: { form: SuperValidated<Infer<RegistrationSchema>>; event: any; formCache: any } } =
+		$props();
 	const form = superForm(data.form, {
 		validators: zodClient(registrationSchema)
 	});
 	const { form: formData, enhance } = form;
+	formData.set(data.formCache || {});
 
 	const activities = [
 		{
@@ -61,26 +64,53 @@
 	<Card.Root class="w-full max-w-sm border-0">
 		<Card.Header>
 			<Card.Title>Register now!</Card.Title>
-			<Card.Description>Enter your name below to get onto the guest list.</Card.Description>
+			<Card.Description>Enter your name below to get on the guest list.</Card.Description>
 		</Card.Header>
 		<Card.Content>
 			<form method="POST" use:enhance>
-				<Form.Field {form} name="username">
-					<Form.Control>
-						{#snippet children({ props })}
-							<Form.Label>Username</Form.Label>
-							<Input {...props} bind:value={$formData.name} />
-						{/snippet}
-					</Form.Control>
-					<Form.Description>This is your public display name.</Form.Description>
-					<Form.FieldErrors />
-				</Form.Field>
-				<Form.Button>Submit</Form.Button>
+				<fieldset disabled={data.formCache != undefined} class="flex flex-col gap-6">
+					<Form.Field {form} name="name">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Name</Form.Label>
+								<Input {...props} bind:value={$formData.name} />
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+					<Form.Field {form} name="time">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Estimated ToA</Form.Label>
+								<Select.Root type="single" bind:value={$formData.time} name={props.name}>
+									<Select.Trigger {...props}>
+										{$formData.time ? $formData.time : 'Select a time'}
+									</Select.Trigger>
+									<Select.Content>
+										{#each TimeEnum as timeValue}
+											<Select.Item value={timeValue} label={timeValue}>{timeValue}</Select.Item>
+										{/each}
+									</Select.Content>
+								</Select.Root>
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+					<Form.Field {form} name="company">
+						<div class="flex flex-row items-start space-x-3">
+							<Form.Control>
+								{#snippet children({ props })}
+									<Checkbox bind:checked={$formData.company} name={props.name} />
+									<Form.Label>I will bring company (+1)</Form.Label>
+								{/snippet}
+							</Form.Control>
+						</div>
+						<Form.FieldErrors />
+					</Form.Field>
+					<Form.Button>Submit</Form.Button>
+				</fieldset>
 			</form>
 		</Card.Content>
-		<Card.Footer class="flex-col gap-2">
-			<Button type="submit" class="w-full">Register!</Button>
-		</Card.Footer>
 	</Card.Root>
 
 	<div class="flex flex-col items-center gap-4">
