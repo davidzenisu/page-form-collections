@@ -46,7 +46,7 @@
 
 	<div class="flex flex-col items-center gap-4">
 		<h2>Activities</h2>
-		<ul class="flex flex-row justify-between gap-4">
+		<ul class="flex flex-col justify-between gap-4 lg:flex-row">
 			{#each activities as activity}
 				<a href={`/events/${data.event.id}/${activity.path}`}>
 					<Card.Root class="w-full max-w-sm">
