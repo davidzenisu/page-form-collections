@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import type { RequestEvent } from '@sveltejs/kit';
 import * as table from '$lib/server/db/schema';
+import { groupBy } from '$lib/utils';
 
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -25,13 +26,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 
     // Add registrationGroup to each event, grouping its registrations by activity
     const eventsWithGroups = events.map(event => {
-        const registrationGroup: Map<string, Array<table.Registration>> = new Map();
-        event.registration.forEach(registration => {
-            if (!registrationGroup.has(registration.activity)) {
-                registrationGroup.set(registration.activity, []);
-            }
-            registrationGroup.get(registration.activity)?.push(registration);
-        });
+        const registrationGroup = groupBy(event.registration, reg => reg.activity);
         return {
             ...event,
             registrationGroup

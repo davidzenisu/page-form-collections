@@ -39,7 +39,7 @@
 					<button aria-label="Delete">🗑️</button>
 				</form>
 				<div>
-					{#each event.registrationGroup.entries() as [activityKey, registrations]}
+					{#each Object.entries(event.registrationGroup) as [activityKey, registrations]}
 						<div>
 							<h2>{activityKey}</h2>
 							<ul>

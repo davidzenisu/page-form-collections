@@ -11,3 +11,10 @@ export type WithoutChild<T> = T extends { child?: any } ? Omit<T, "child"> : T;
 export type WithoutChildren<T> = T extends { children?: any } ? Omit<T, "children"> : T;
 export type WithoutChildrenOrChild<T> = WithoutChildren<WithoutChild<T>>;
 export type WithElementRef<T, U extends HTMLElement = HTMLElement> = T & { ref?: U | null };
+
+const groupBy = <T, K extends keyof any>(arr: T[], key: (i: T) => K) =>
+	arr.reduce((groups, item) => {
+		(groups[key(item)] ||= []).push(item);
+		return groups;
+	}, {} as Record<K, T[]>);
+export { groupBy };
