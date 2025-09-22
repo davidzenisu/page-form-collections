@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import * as Table from '$lib/components/ui/table/index.js';
 	let { data } = $props();
 
 	const dateOptions = {
@@ -41,15 +42,25 @@
 				<div>
 					{#each Object.entries(event.registrationGroup) as [activityKey, registrations]}
 						<div>
-							<h2>{activityKey}</h2>
-							<ul>
-								{#each registrations as registration}
-									<li>
-										Activity: {registration.activity} | Name: {registration.name} | +1: {registration.company}
-										| Time: {registration.time}
-									</li>
-								{/each}
-							</ul>
+							<Table.Root>
+								<Table.Caption>Registration for the {activityKey} event.</Table.Caption>
+								<Table.Header>
+									<Table.Row>
+										<Table.Head class="w-[100px]">Name</Table.Head>
+										<Table.Head>Time Of Arrival</Table.Head>
+										<Table.Head>Company</Table.Head>
+									</Table.Row>
+								</Table.Header>
+								<Table.Body>
+									{#each registrations as registration}
+										<Table.Row>
+											<Table.Cell class="font-medium">{registration.name}</Table.Cell>
+											<Table.Cell>{registration.time}</Table.Cell>
+											<Table.Cell>{registration.company}</Table.Cell>
+										</Table.Row>
+									{/each}
+								</Table.Body>
+							</Table.Root>
 						</div>
 					{/each}
 				</div>
