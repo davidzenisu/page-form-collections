@@ -1,4 +1,7 @@
-<script>
+<script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
+	import { enhance } from '$app/forms';
+	import * as Table from '$lib/components/ui/table/index.js';
 	let { data } = $props();
 
 	const dateOptions = {
@@ -38,7 +41,38 @@
 					<span>{event.time.toLocaleString('en-GB', dateOptions)}</span>
 					<button aria-label="Delete">🗑️</button>
 				</form>
+				<div>
+					{#each Object.entries(event.registrationGroup) as [activityKey, registrations]}
+						<div>
+							<Table.Root>
+								<Table.Caption>Registration for the {activityKey} event.</Table.Caption>
+								<Table.Header>
+									<Table.Row>
+										<Table.Head class="w-[100px]">Name</Table.Head>
+										<Table.Head>Time Of Arrival</Table.Head>
+										<Table.Head>Company</Table.Head>
+									</Table.Row>
+								</Table.Header>
+								<Table.Body>
+									{#each registrations as registration}
+										<Table.Row>
+											<Table.Cell class="font-medium">{registration.name}</Table.Cell>
+											<Table.Cell>{registration.time}</Table.Cell>
+											<Table.Cell>{registration.company}</Table.Cell>
+										</Table.Row>
+									{/each}
+								</Table.Body>
+							</Table.Root>
+						</div>
+					{/each}
+				</div>
 			</li>
 		{/each}
 	</ul>
+
+	<div>
+		<form method="POST" action="?/logout" use:enhance>
+			<Button type="submit">Sign out</Button>
+		</form>
+	</div>
 </div>
