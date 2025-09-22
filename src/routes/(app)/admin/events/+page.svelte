@@ -41,7 +41,8 @@
 				<div>
 					{#each event.registration as registration}
 						<div>
-							Activity: {registration.activity} | Name: {registration.name} | Time: {registration.time}
+							Activity: {registration.activity} | Name: {registration.name} | +1: {registration.company}
+							| Time: {registration.time}
 						</div>
 					{/each}
 				</div>
