@@ -38,6 +38,13 @@
 					<span>{event.time.toLocaleString('en-GB', dateOptions)}</span>
 					<button aria-label="Delete">🗑️</button>
 				</form>
+				<div>
+					{#each event.registration as registration}
+						<div>
+							Activity: {registration.activity} | Name: {registration.name} | Time: {registration.time}
+						</div>
+					{/each}
+				</div>
 			</li>
 		{/each}
 	</ul>

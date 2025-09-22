@@ -13,8 +13,18 @@ export const load: PageServerLoad = async ({ cookies }) => {
         cookies.set('userid', id, { path: '/' });
     }
 
+    const events = await db.query.event.findMany({
+        orderBy: (event, { desc }) => [desc(event.time)],
+        with: {
+            registration: {
+                orderBy: (registration, { asc }) => [asc(registration.activity)]
+            }
+        }
+    });
+    console.log(events);
+
     return {
-        events: await db.select().from(table.event)
+        events: events
     };
 }
 
