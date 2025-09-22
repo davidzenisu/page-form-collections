@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
+	import { enhance } from '$app/forms';
 	import * as Table from '$lib/components/ui/table/index.js';
 	let { data } = $props();
 
@@ -67,4 +69,10 @@
 			</li>
 		{/each}
 	</ul>
+
+	<div>
+		<form method="POST" action="?/logout" use:enhance>
+			<Button type="submit">Sign out</Button>
+		</form>
+	</div>
 </div>
