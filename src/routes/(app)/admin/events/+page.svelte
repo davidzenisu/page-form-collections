@@ -39,10 +39,17 @@
 					<button aria-label="Delete">🗑️</button>
 				</form>
 				<div>
-					{#each event.registration as registration}
+					{#each event.registrationGroup.entries() as [activityKey, registrations]}
 						<div>
-							Activity: {registration.activity} | Name: {registration.name} | +1: {registration.company}
-							| Time: {registration.time}
+							<h2>{activityKey}</h2>
+							<ul>
+								{#each registrations as registration}
+									<li>
+										Activity: {registration.activity} | Name: {registration.name} | +1: {registration.company}
+										| Time: {registration.time}
+									</li>
+								{/each}
+							</ul>
 						</div>
 					{/each}
 				</div>

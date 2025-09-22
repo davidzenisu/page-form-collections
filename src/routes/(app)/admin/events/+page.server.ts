@@ -5,6 +5,7 @@ import type { PageServerLoad } from './$types';
 import type { RequestEvent } from '@sveltejs/kit';
 import * as table from '$lib/server/db/schema';
 
+
 export const load: PageServerLoad = async ({ cookies }) => {
     let id = cookies.get('userid');
 
@@ -17,14 +18,28 @@ export const load: PageServerLoad = async ({ cookies }) => {
         orderBy: (event, { desc }) => [desc(event.time)],
         with: {
             registration: {
-                orderBy: (registration, { asc }) => [asc(registration.activity)]
+                orderBy: (registration, { asc }) => [asc(registration.activity)],
             }
         }
     });
-    console.log(events);
+
+    // Add registrationGroup to each event, grouping its registrations by activity
+    const eventsWithGroups = events.map(event => {
+        const registrationGroup: Map<string, Array<table.Registration>> = new Map();
+        event.registration.forEach(registration => {
+            if (!registrationGroup.has(registration.activity)) {
+                registrationGroup.set(registration.activity, []);
+            }
+            registrationGroup.get(registration.activity)?.push(registration);
+        });
+        return {
+            ...event,
+            registrationGroup
+        };
+    });
 
     return {
-        events: events
+        events: eventsWithGroups
     };
 }
 
