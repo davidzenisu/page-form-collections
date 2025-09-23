@@ -1,5 +1,5 @@
 import { encodeBase32LowerCase } from '@oslojs/encoding';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, redirect, type RequestEvent } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import * as auth from '$lib/server/auth';
 import { db } from '$lib/server/db';
@@ -41,10 +41,11 @@ function verify(hash: string, password: string) {
 
 
 export const load: PageServerLoad = async (event) => {
-	if (event.locals.user) {
+	if (event.locals.user && event.locals.user.isAdmin) {
 		return redirect(302, '/admin/events');
 	}
-	return {};
+	console.log('Load login page', event.locals.user);
+	return { user: event.locals.user };
 };
 
 export const actions: Actions = {
@@ -117,6 +118,16 @@ export const actions: Actions = {
 			return fail(500, { message: 'An error has occurred' });
 		}
 		return redirect(302, '/admin/events');
+	},
+	logout: async (event: RequestEvent) => {
+		console.log('Logging out');
+		if (!event.locals.session) {
+			return fail(401);
+		}
+		await auth.invalidateSession(event.locals.session.id);
+		auth.deleteSessionTokenCookie(event);
+
+		return redirect(302, '/admin/login');
 	}
 };
 

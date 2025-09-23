@@ -35,12 +35,8 @@
 	<ul class="todos">
 		{#each data.events as event}
 			<li>
-				<form method="POST" action="?/delete">
-					<input type="hidden" name="id" value={event.id} />
-					<span>{event.name}</span>
-					<span>{event.time.toLocaleString('en-GB', dateOptions)}</span>
-					<button aria-label="Delete">🗑️</button>
-				</form>
+				<span>{event.name}</span>
+				<span>{event.time.toLocaleString('en-GB', dateOptions)}</span>
 				<div>
 					{#each Object.entries(event.registrationGroup) as [activityKey, registrations]}
 						<div>

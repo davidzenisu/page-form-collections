@@ -29,6 +29,13 @@
       "when": 1758379507904,
       "tag": "0003_sticky_fallen_one",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1758644039077,
+      "tag": "0004_loose_genesis",
+      "breakpoints": true
     }
   ]
 }
