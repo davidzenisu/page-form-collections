@@ -50,11 +50,6 @@ export const actions = {
         });
     },
 
-    delete: async ({ cookies, request }: RequestEvent) => {
-        const data = await request.formData();
-        await db.delete(table.event).where(eq(table.event.id, data.get('id') as string));
-    },
-
     logout: async (event: RequestEvent) => {
         console.log('Logging out');
         if (!event.locals.session) {
