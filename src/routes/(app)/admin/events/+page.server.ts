@@ -67,6 +67,8 @@ function requireLogin() {
 
     if (!locals.user) {
         return redirect(302, '/admin/login');
+    } else if (!locals.user.isAdmin) {
+        return redirect(302, '/admin/login');
     }
 
     return locals.user;
