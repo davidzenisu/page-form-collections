@@ -39,6 +39,8 @@
 		<p>You're logged in as {data.user.username}.</p>
 		<p>Your are {data.user.isAdmin ? '' : 'NOT'} an admin.</p>
 		<form method="post" action="?/logout" use:enhance>
+			<!-- https://github.com/Azure/static-web-apps/issues/1512 -->
+			<input type="hidden" name="foo" value="bar" />
 			<Button type="submit" variant="destructive">Logout</Button>
 		</form>
 	{/if}
