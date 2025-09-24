@@ -68,6 +68,8 @@
 
 	<div>
 		<form method="POST" action="?/logout" use:enhance>
+			<!-- https://github.com/Azure/static-web-apps/issues/1512 -->
+			<input type="hidden" name="foo" value="bar" />
 			<Button type="submit">Sign out</Button>
 		</form>
 	</div>
