@@ -1,6 +1,7 @@
 <script>
 	import * as Card from '$lib/components/ui/card/index.js';
 	import eventImage from '$lib/images/main_event.jpg';
+	import { Calendar } from '@lucide/svelte';
 
 	let { data } = $props();
 
@@ -30,6 +31,7 @@
 					</Card.Content>
 					<Card.Footer class="flex-col items-end gap-2">
 						<div>{event.time.toLocaleString('en-GB', dateOptions)}</div>
+						<Calendar />
 					</Card.Footer>
 				</Card.Root>
 			</a>
