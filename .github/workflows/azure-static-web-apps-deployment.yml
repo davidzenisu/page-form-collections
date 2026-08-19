@@ -24,6 +24,11 @@ jobs:
         with:
           submodules: true
           lfs: true
+      #TODO: Remove after testing!
+      - name: Test npm install
+        run: |
+          npm install
+          git diff package-lock.json
       - name: Azure login
         uses: azure/login@v2
         with:
@@ -64,7 +69,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
           # Required because otherwise it's using 'npm install' (discarding package lock)
           # https://github.com/microsoft/Oryx/issues/823
-          app_build_command: 'npm explain validator && npm ci && npm run build'
+          app_build_command: 'npm ci && npm run build'
         env:
           PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
 
