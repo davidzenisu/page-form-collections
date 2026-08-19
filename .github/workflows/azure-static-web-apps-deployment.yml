@@ -77,10 +77,11 @@ jobs:
           # app_location: '/' # App source code path
           # output_location: 'build/static' # Built app content directory - optional
           # Built outside of Oryx
-          app_location: 'build/static' # App source code path
           output_location: ''
-          api_location: 'build/server' # Api source code path - optional
+          app_location: 'build/static' # App source code path
           skip_app_build: true
+          api_location: 'build/server' # Api source code path - optional
+          skip_api_build: true
           ###### End of Repository/Build Configurations ######
           # Build locally because Oryx node versions are outdated!
 
