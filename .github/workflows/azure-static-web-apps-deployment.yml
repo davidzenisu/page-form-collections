@@ -49,22 +49,7 @@ jobs:
             echo "Fetching deployment token..."
             token=$(az staticwebapp secrets list --name ${{ secrets.AZURE_SWA_NAME }} --query "properties.apiKey" -o tsv)
             echo "token=$token" >> $GITHUB_OUTPUT
-
-      - name: Set up node
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24.19.0
-          cache: 'npm'
-
-      - name: Install node modules
-        run: npm ci
-
-      - name: Build application
-        run: npm run build
-        env:
-          PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
-
-      - name: Deploy
+      - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -73,18 +58,12 @@ jobs:
           action: 'upload'
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          # if built with Oryx
-          # app_location: '/' # App source code path
-          # output_location: 'build/static' # Built app content directory - optional
-          # Built outside of Oryx
-          output_location: ''
-          app_location: 'build/static' # App source code path
-          skip_app_build: true
-          api_location: 'build' # Api source code path - optional
-          skip_api_build: true
+          app_location: '/' # App source code path
+          output_location: 'build/static' # Built app content directory - optional
+          api_location: 'build/server' # Api source code path - optional
           ###### End of Repository/Build Configurations ######
-          # Build locally because Oryx node versions are outdated!
-
+        env:
+          PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
