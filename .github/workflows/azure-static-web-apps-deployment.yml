@@ -68,6 +68,7 @@ jobs:
           app_build_command: 'npm ci && npm run build'
         env:
           PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
+          CUSTOM_BUILD_COMMAND: 'npm ci && npm run build'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
