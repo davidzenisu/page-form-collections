@@ -61,6 +61,8 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
 
       - name: Deploy
         id: builddeploy
