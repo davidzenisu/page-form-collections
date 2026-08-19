@@ -64,7 +64,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
           # Required because otherwise it's using 'npm install' (discarding package lock)
           # https://github.com/microsoft/Oryx/issues/823
-          app_build_command: 'npm ci'
+          app_build_command: 'npm ci && npm run build'
         env:
           PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
 
