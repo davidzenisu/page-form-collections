@@ -66,7 +66,7 @@ jobs:
           PUBLIC_GITHUB_URL: ${{ github.server_url }}/${{ github.repository }}
           # Required because otherwise it's using 'npm install' (discarding package lock)
           # https://github.com/microsoft/Oryx/issues/823
-          CUSTOM_BUILD_COMMAND: 'npm ci && npm run build'
+          CUSTOM_BUILD_COMMAND: 'npm config ls && npm ci && npm run build'
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
